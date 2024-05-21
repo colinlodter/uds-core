@@ -1,0 +1,26 @@
+apiVersion: uds.dev/v1alpha1
+kind: Exemption
+metadata:
+  name: opentelemetry
+  namespace: uds-policy-exemptions
+spec:
+  exemptions:
+    - policies:
+        - DisallowPrivileged
+        - RequireNonRootUser
+        - RestrictSELinuxType
+        - RestrictHostPathWrite
+        - RestrictVolumeTypes
+        - DisallowHostNamespaces
+        - DropAllCapabilities
+      matcher:
+        kind: pod
+        namespace: opentelemetry-operator-system
+        name: "^otel-.*"
+      title: "opentelemetry exemptions"
+      description: "Opentelemetry mounts the following hostPaths:
+        - `/var/log/pods`: to tail pod logs
+        - `/var/lib/docker/containers`: to tail container logs
+        Since logs can have sensitive information, it is better to exclude
+        OpenTelemetry from the policy than add the paths as allowable mounts
+        https://github.com/grafana/helm-charts/blob/main/charts/promtail/templates/daemonset.yaml#L120"

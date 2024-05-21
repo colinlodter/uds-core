@@ -1,0 +1,25 @@
+kind: ZarfPackageConfig
+metadata:
+  name: uds-core-opentelemetry
+  description: "UDS Core OpenTelemetry"
+  url: https://opentelemetry.io/
+
+variables:
+  - name: DOMAIN
+    description: "Cluster domain"
+    default: "uds.dev"
+
+components:
+  - name: opentelemetry-operator
+    required: true
+    only:
+      flavor: upstream
+    import:
+      path: common
+    charts:
+      - name: opentelemetry-operator
+        valuesFiles:
+          - values/upstream-values.yaml
+    images:
+      - ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator:0.56.0
+      - ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.99.0

@@ -1,0 +1,31 @@
+kind: ZarfPackageConfig
+metadata:
+  name: uds-opentelemetry-common
+  description: "UDS Core OpenTelemetry Common"
+  url: https://opentelemetry.io/
+
+components:
+  - name: opentelemetry-operator
+    required: true
+    charts:
+      - name: opentelemetry-operator
+        url: https://open-telemetry.github.io/opentelemetry-helm-charts
+        version: 0.56.0
+        namespace: opentelemetry-operator-system
+        valuesFiles:
+          - ../values/values.yaml
+      - name: uds-opentelemetry-config
+        namespace: opentelemetry-operator-system
+        version: 0.1.0
+        localPath: ../chart
+    actions:
+      onDeploy:
+        after:
+          - description: Validate OpenTelemetry Package
+            maxTotalSeconds: 300
+            wait:
+              cluster:
+                kind: Packages
+                name: opentelemetry
+                namespace: opentelemetry-operator-system
+                condition: "'{.status.phase}'=Ready"

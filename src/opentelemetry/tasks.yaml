@@ -1,0 +1,17 @@
+tasks:
+  - name: validate
+    actions:
+      - description: Validate opentelemetry is up
+        wait:
+          cluster:
+            kind: Pod
+            name: "app.kubernetes.io/instance=opentelemetry-operator"
+            namespace: opentelemetry-operator-system
+            condition: Ready
+      #  todo: Fix single package validation checks in CI where Istio isn't installed
+      # - description: Validate grafana interface
+      #   wait:
+      #     network:
+      #       protocol: https
+      #       address: grafana.admin.uds.dev
+      #       code: 200
