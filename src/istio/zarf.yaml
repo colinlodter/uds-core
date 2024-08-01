@@ -8,6 +8,8 @@ variables:
   - name: DOMAIN
     description: "Cluster domain"
     default: "uds.dev"
+  - name: REGISTRY
+    default: "docker.io"
 
 components:
   - name: istio-controlplane

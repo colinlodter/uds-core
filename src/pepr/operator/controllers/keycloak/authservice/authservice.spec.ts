@@ -29,6 +29,7 @@ describe("authservice", () => {
       frontchannelLogout: false,
       fullScopeAllowed: false,
       implicitFlowEnabled: false,
+      labels: {},
       nodeReRegistrationTimeout: 0,
       notBefore: 0,
       optionalClientScopes: [],

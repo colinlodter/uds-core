@@ -542,6 +542,10 @@ export interface Sso {
    */
   groups?: Groups;
   /**
+   * The labels to apply to the SSO secret
+   */
+  labels?: { [key: string]: string };
+  /**
    * Specifies display name of the client
    */
   name: string;

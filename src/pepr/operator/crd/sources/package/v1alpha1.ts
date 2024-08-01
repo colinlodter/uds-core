@@ -360,6 +360,13 @@ const sso = {
           },
         },
       },
+      labels: {
+        description: "The labels to apply to the SSO secret",
+        type: "object",
+        additionalProperties: {
+          type: "string",
+        },
+      },
     },
   } as V1JSONSchemaProps,
 } as V1JSONSchemaProps;

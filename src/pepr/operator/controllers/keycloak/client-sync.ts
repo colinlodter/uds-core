@@ -159,15 +159,25 @@ async function syncClient(
 
   // Create or update the client secret
   const generation = (pkg.metadata?.generation ?? 0).toString();
+  const defaultLabels = new Map<string, string | undefined>([
+      ["uds/package", pkg.metadata!.name],
+      ["uds/generation", generation],
+  ]);
+  const additionalLabels = pkg.metadata?.labels;
+  const mergedLabels = new Map<string, string | undefined>(defaultLabels);
+
+  additionalLabels.forEach(obj, k) =>
+
   await K8s(kind.Secret).Apply({
     metadata: {
       namespace: pkg.metadata!.namespace,
       // Use the CR secret name if provided, otherwise use the client name
       name: secretName || name,
-      labels: {
-        "uds/package": pkg.metadata!.name,
-        "uds/generation": generation,
-      },
+      // labels: {
+      //   "uds/package": pkg.metadata!.name,
+      //   "uds/generation": generation,
+      // },
+      labels: mergedLabels,
 
       // Use the CR as the owner ref for each VirtualService
       ownerReferences: getOwnerRef(pkg),

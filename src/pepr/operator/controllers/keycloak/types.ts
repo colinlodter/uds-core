@@ -13,6 +13,7 @@ export interface Client {
   frontchannelLogout: boolean;
   fullScopeAllowed: boolean;
   implicitFlowEnabled: boolean;
+  labels: Record<string, string>;
   nodeReRegistrationTimeout: number;
   notBefore: number;
   optionalClientScopes: string[];
